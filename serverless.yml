@@ -1,11 +1,12 @@
 service: project-forgetmenot-backend
 provider:
   name: aws
+  region: eu-west-1
   runtime: nodejs12.x
   
 functions:
   bills:
-    handler: bills.handler
+    handler: handler.app
     environment:
       DB_HOST: ${opt:DB_HOST}
       DB_USER: ${opt:DB_USER}

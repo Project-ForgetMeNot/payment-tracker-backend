@@ -23,8 +23,10 @@ app.get("/bills", function(req, res) {
       })
     } else {
       res.status(200).json({
-        todos: data
+        bills: data
       });
     }
   });
 });
+
+module.exports.handler = serverless(app);
