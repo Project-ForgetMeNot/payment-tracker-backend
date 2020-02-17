@@ -30,23 +30,46 @@ app.get("/bills", function(req, res) {
 });
 
 app.post("/bills", function(req, res) {
-  const newBill = req.body
-
+  const newBill = req.body;
+  
   connection.query("INSERT INTO Bills SET ?", [newBill], function(err,data) {
     if (err) {
       res.status(500).json({
         error: err
       });
     } else {
-      newBill.billId = data.insertId;
-      newBill.renewalDate = new Date(newBill.renewalDate).toISOString();
-      newBill.billType = body.billType;
-      newBill.billProvider = body.billProvider;
-      res.status(201).json({newBill});
+      newBill.billId = data.insertId,
+      res.status(201).json({bill: newBill});
+    }
+  });
+});
+
+app.delete("/bills/:billId", function(req, res) {
+  const id = req.params.billId;
+
+  connection.query("DELETE FROM Bills WHERE billId=?", [id], function(err,data) {
+    if (err) {
+      res.status(500).json({
+        error: err
+      });
+    } else {
+      res.sendStatus(200);
     }
   });
 });
 
 
+app.put("/bills/:billId", function (req, res) {
+  const updatedBill = req.body;
+  const id = req.params.billId; 
+
+  connection.query("UPDATE Bills SET ? WHERE billId=?", [updatedBill, id], function(err, data) {
+    if (err) {
+      res.status(500).json({error: err})
+    } else {
+      res.status(200).json({data:data});
+    }
+  });
+});
 
 module.exports.handler = serverless(app);
