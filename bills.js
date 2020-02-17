@@ -29,4 +29,24 @@ app.get("/bills", function(req, res) {
   });
 });
 
+app.post("/bills", function(req, res) {
+  const newBill = req.body
+
+  connection.query("INSERT INTO Bills SET ?", [newBill], function(err,data) {
+    if (err) {
+      res.status(500).json({
+        error: err
+      });
+    } else {
+      newBill.billId = data.insertId;
+      newBill.renewalDate = new Date(newBill.renewalDate).toISOString();
+      newBill.billType = body.billType;
+      newBill.billProvider = body.billProvider;
+      res.status(201).json({newBill});
+    }
+  });
+});
+
+
+
 module.exports.handler = serverless(app);
