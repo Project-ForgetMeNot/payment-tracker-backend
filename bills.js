@@ -72,4 +72,17 @@ app.put("/bills/:billId", function (req, res) {
   });
 });
 
+app.get("/bills/reminders", function(req, res) {
+  connection.query("SELECT billId, emailAdd, billProvider, DATE_FORMAT(renewalDate, '%Y-%m-%d') FROM Bills WHERE DATE_FORMAT(renewalDate, '%Y-%m-%d') = CURDATE()", function(err, data) {
+    if (err) {
+      res.status(500).json({error: err})
+    } else {
+      data.forEach(bill => {
+      res.status(200).json({data:bill.emailAdd});
+      });
+    }
+  });
+});
+
+
 module.exports.handler = serverless(app);

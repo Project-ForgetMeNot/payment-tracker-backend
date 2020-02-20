@@ -32,3 +32,8 @@ functions:
           method: put
           path: bills/{billId}
           cors: true
+      
+      - http:
+          method: get
+          path: bills/reminders
+          cors: true
