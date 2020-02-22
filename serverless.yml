@@ -45,4 +45,4 @@ functions:
       DB_USER: ${opt:DB_USER}
       DB_PASSWORD: ${opt:DB_PASSWORD}
     events:
-      - schedule: rate(1 hour)
+      - schedule: rate(10 days)

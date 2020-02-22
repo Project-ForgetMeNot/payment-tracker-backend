@@ -32,6 +32,11 @@ app.get("/bills", function (req, res) {
 
 app.post("/bills", function (req, res) {
   const newBill = req.body;
+  if (!newBill.billType || !newBill.renewalDate || !newBill.billProvider || !newBill.emailAdd) {
+    return res.status(500).json({
+      error: "Input fields empty"
+    });
+  }
 
   connection.query("INSERT INTO Bills SET ?", [newBill], function (err, data) {
     if (err) {
