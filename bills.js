@@ -4,7 +4,6 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
 
-
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
@@ -79,20 +78,20 @@ app.put("/bills/:billId", function (req, res) {
 });
 
 app.get("/bills/reminders", function (req, res) {
-  connection.query("SELECT billId, emailAdd, billProvider, DATE_FORMAT(renewalDate, '%Y-%m-%d') AS expiryDate FROM Bills WHERE DATE_FORMAT(renewalDate, '%Y-%m-%d') = CURDATE()", function (err, data) {
+  connection.query("SELECT billId, emailAdd, billProvider, DATE_FORMAT(renewalDate, '%Y-%m-%d') AS expiryDate FROM Bills WHERE DATE_FORMAT(renewalDate, '%Y-%m-%d')", function (err, data) {
     if (err) {
       res.status(500).json({ error: err })
     } else {
       let resume = [];
 
       const sgMail = require('@sendgrid/mail');
-      sgMail.setApiKey('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');
+      sgMail.setApiKey('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');
 
       data.forEach((bill) => {
 
         const msg = {
           to: bill.emailAdd,
-          from: 'info@carloscastillo.cl',
+          from: 'test@test.com',
           subject: 'You have a bill that will expire shortly',
           text: 'Your bill with ' + bill.billProvider + ' will expire on ' + bill.expiryDate + '. Don`t forget to shop around to save money or renew with ' + bill.billProvider + '.',
           html: '<strong>Your bill with ' + bill.billProvider + ' will expire on ' + bill.expiryDate + '. Don`t forget to shop around to save money or renew with ' + bill.billProvider + '. </strong>'
@@ -105,6 +104,5 @@ app.get("/bills/reminders", function (req, res) {
     }
   });
 });
-
 
 module.exports.handler = serverless(app);

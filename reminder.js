@@ -16,13 +16,13 @@ module.exports.handler = () => {
       } else {
 
         const sgMail = require('@sendgrid/mail');
-        sgMail.setApiKey('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');
+        sgMail.setApiKey('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');
 
         const billEmailsToSend = [];
         data.forEach((bill) => {
           const msg = {
             to: bill.emailAdd,
-            from: 'test@test.com',
+            from: 'bills@forgetmenot.com',
             subject: 'You have a bill that will expire shortly',
             text: 'Your bill with ' + bill.billProvider + ' will expire on ' + bill.expiryDate + '. Don`t forget to shop around to save money or renew with ' + bill.billProvider + '.',
             html: '<strong>Your bill with ' + bill.billProvider + ' will expire on ' + bill.expiryDate + '. Don`t forget to shop around to save money or renew with ' + bill.billProvider + '. </strong>'
