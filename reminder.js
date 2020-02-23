@@ -23,7 +23,7 @@ module.exports.handler = () => {
           const msg = {
             to: bill.emailAdd,
             from: 'bills@forgetmenot.com',
-            subject: 'You have a bill that will expire shortly',
+            subject: 'A bill is about to expire...',
             text: 'Your bill with ' + bill.billProvider + ' will expire on ' + bill.expiryDate + '. Don`t forget to shop around to save money or renew with ' + bill.billProvider + '.',
             html: '<strong>Your bill with ' + bill.billProvider + ' will expire on ' + bill.expiryDate + '. Don`t forget to shop around to save money or renew with ' + bill.billProvider + '. </strong>'
           };

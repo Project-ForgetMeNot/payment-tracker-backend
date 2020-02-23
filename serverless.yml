@@ -45,4 +45,5 @@ functions:
       DB_USER: ${opt:DB_USER}
       DB_PASSWORD: ${opt:DB_PASSWORD}
     events:
-      - schedule: rate(2 minutes)
+      - schedule: rate(1 day)
+      - schedule: cron(0 9 * * ? *)
